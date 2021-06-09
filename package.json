@@ -1,0 +1,26 @@
+{
+  "name": "swift-wheels-api",
+  "version": "1.0.0",
+  "description": "This is an API for cars and it's brands",
+  "main": "server.js",
+  "scripts": {
+    "start:dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krishnapramodaradhi/swift-wheels-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krishnapramodaradhi/swift-wheels-api/issues"
+  },
+  "homepage": "https://github.com/krishnapramodaradhi/swift-wheels-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
