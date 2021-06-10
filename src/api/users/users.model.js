@@ -30,6 +30,14 @@ userSchema.statics.findCredentials = async (email, password) => {
   return user;
 };
 
+userSchema.methods.toJSON = function () {
+  const user = this.toObject();
+
+  delete user.password;
+  delete user.__v;
+  return user;
+};
+
 userSchema.methods.generateAuthToken = function () {
   const user = this;
   const token = sign({ _id: user._id.toString() }, process.env.SECRET);

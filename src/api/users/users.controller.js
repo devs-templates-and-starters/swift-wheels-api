@@ -1,6 +1,10 @@
 const User = require('../users/users.model');
 const errors = require('../../config/errors.json');
 
+exports.getUser = async (req, res, next) => {
+  res.json(req.user);
+};
+
 exports.updateUser = async (req, res, next) => {
   try {
     console.log(req.headers);
@@ -25,13 +29,10 @@ exports.updateUser = async (req, res, next) => {
 
 exports.deleteUser = async (req, res, next) => {
   try {
-    const deletedUser = awaitUser.findByIdAndDelete(req.params.id);
-    if (!deletedUser)
-      throw {
-        ...errors[404],
-        data: `Unable to delete user. id - ${req.params.id} not found`,
-      };
+    await req.user.remove();
 
-    res.json(deletedUser);
-  } catch (e) {}
+    res.json(req.user);
+  } catch (e) {
+    next(e);
+  }
 };

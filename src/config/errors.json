@@ -7,6 +7,10 @@
     "statusCode": "401",
     "message": "Not Authorized"
   },
+  "403": {
+    "statusCode": 403,
+    "message": "Forbidden"
+  },
   "404": {
     "statusCode": "404",
     "message": "Not Found"
