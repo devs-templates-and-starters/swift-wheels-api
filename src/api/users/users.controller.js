@@ -3,6 +3,7 @@ const errors = require('../../config/errors.json');
 
 exports.updateUser = async (req, res, next) => {
   try {
+    console.log(req.headers);
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },

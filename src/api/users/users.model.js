@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose');
-const { encrypt } = require('../../utils');
+const { encrypt, decrypt } = require('../../utils');
+const errors = require('../../config/errors.json');
+const { sign } = require('jsonwebtoken');
 
 const stringType = {
   type: String,
@@ -9,10 +11,30 @@ const stringType = {
 const userSchema = new Schema({
   firstName: stringType,
   lastName: stringType,
-  email: stringType,
+  email: { ...stringType, unique: true },
   password: stringType,
   gender: stringType,
 });
+
+userSchema.statics.findCredentials = async (email, password) => {
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw { ...errors[401], data: 'Auth Failed' };
+  }
+
+  if (!decrypt(user.password, password)) {
+    throw { ...errors[401], data: 'Auth Failed' };
+  }
+
+  return user;
+};
+
+userSchema.methods.generateAuthToken = function () {
+  const user = this;
+  const token = sign({ _id: user._id.toString() }, process.env.SECRET);
+  return token;
+};
 
 userSchema.pre('save', function (next) {
   const user = this;
@@ -24,4 +46,5 @@ userSchema.pre('save', function (next) {
   next();
 });
 
-module.exports = model('users', userSchema);
+const User = model('users', userSchema);
+module.exports = User;
