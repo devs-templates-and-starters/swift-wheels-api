@@ -1,6 +1,5 @@
-const logRequests = (req, res, next) => {
+const logRequests = (req) => {
   console.log(new Date(), req.method, req.path);
-  next();
 };
 
 module.exports = logRequests;
