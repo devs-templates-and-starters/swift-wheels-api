@@ -14,6 +14,7 @@ const userSchema = new Schema({
   email: { ...stringType, unique: true },
   password: stringType,
   gender: stringType,
+  wishlist: [{ type: Schema.Types.ObjectId, ref: 'cars' }],
 });
 
 userSchema.statics.findCredentials = async (email, password) => {
